@@ -1,5 +1,4 @@
 ###A restful API made with Flask.
-MAKE SURE YOU KNOW WHAT RESTFUL MEANS
 
 Making APIs is almost certainly something I'll need to do in my software career, so I thought I'd show some initiative and prove I can make an API.
 
@@ -8,6 +7,10 @@ This API has the following features:
 - Lets the admin create user IDs via the API interface.
 - Allows a third-party user with a valid api_key to submit data and retrieve data from the API.
 - Returns a json object with the data to the client.
+
+This is RESTful in the sense it does not need a client state: state is handled with a query string. This API is modular in design and is scalable. This uses a production-ready database, postgreSQL.
+
+This interface is self-explanatory: at no point in the process of formatting a query string should the user not receive feedback.
 
 ####Installation for development
 
@@ -100,6 +103,8 @@ You should see this echo:
 
     Entered user details
 
+That function is not used in the API and no request the user enters will allow access to it.
+
 Now, this user can add and retrieve data from the ```data_store``` table with her ```api_key```.
 
 Accesing the database can be done through a query string to ```/post?```:
@@ -153,3 +158,5 @@ No copyright applies, appart from the licences distributed with any packages thi
 If I was going to do this again, I'd use the SQLAlchemy tool for this. I did investigate this tool and I like it, and I think it's worth using. This is my first Flask/postgreSQL/Heroku build so I thought I'd do things with postgreSQL and psycopg2 to see how that went first.
 
 One thing I find really appealing about SQLAlchemy is it requires you to create classes as models, which are used to build the databases. This is then sensible to seperate the class concern into a module called models. You can then put the views in a view module, and you've got a nice, neat, MVC design patter. I've got my 'models' in a file called ```database_manager```. Not a perfect MVC pattern, but it makes sense to the author and is seperate from the ```controller``` and ```views```.
+
+Also, I've been unsure when to commit anything to Github with this project. The entire project has been a learning experience and it was in prototype mode right until the end. I feel like having the Git history recorded of that prototype process would not be useful.
