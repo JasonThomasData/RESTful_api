@@ -6,7 +6,7 @@ import psycopg2, os
 
 import urllib.parse
 
-'''
+
 urllib.parse.uses_netloc.append("postgres")
 url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
 
@@ -21,7 +21,7 @@ conn = psycopg2.connect(
 '''
 #This is the code to connect to the database on your local dev env
 conn = psycopg2.connect("dbname=john user=john")
-
+'''
 
 def create_tables():
     '''
