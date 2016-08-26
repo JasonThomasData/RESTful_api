@@ -34,23 +34,6 @@ You will need to have postgreSQL installed on your machine. You can install it l
 
     sudo apt-get install postgresql
 
-####Deployment
-
-I've made my API to run on Heroku. To connect to the postgreSQL database in Heroku, you need this code:
-
-    import urlparse
-
-    urlparse.uses_netloc.append("postgres")
-    url = urlparse.urlparse(os.environ["DATABASE_URL"])
-
-    conn = psycopg2.connect(
-        database=url.path[1:],
-        user=url.username,
-        password=url.password,
-        host=url.hostname,
-        port=url.port
-    )
-
 In development, you can replace the above code with your own connection:
 
     conn = psycopg2.connect("dbname=john user=john")
@@ -75,6 +58,44 @@ Then:
 
 The above is preferable to using app.run(), according to the [API docs](http://flask.pocoo.org/docs/0.11/quickstart/#a-minimal-application), since it has wierd side effects.
 
+
+####Deployment
+
+I've made my API to run on Heroku. To connect to the postgreSQL database in Heroku, you need this code:
+
+    import urllib.parse
+
+    urllib.parse.uses_netloc.append("postgres")
+    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+
+    conn = psycopg2.connect(
+        database=url.path[1:],
+        user=url.username,
+        password=url.password,
+        host=url.hostname,
+        port=url.port
+    )
+
+The Heroku postgreSQL docs explain to use urlparse, but that is a python2 lib and python3 must use urllib.parse
+
+I installed my app with the Heroku toolbelt. You should have a git repository with up-to-date master branch.
+
+Go to Heroku and type:
+
+    heroku create APP_NAME
+
+The reason for using git is you can push directly to heroku using, like this:
+
+    git push heroku master
+
+Then, type:
+
+    heroku addons:add heroku-postgresql
+
+That creates a postgreSQL database for you, and promotes it to the env variable DATABASE_URL
+
+Here's some explainers I found useful while setting up 
+
 ####Tests
 
 Currently these unit tests work in a development environment.
@@ -93,13 +114,13 @@ To run the tests, use:
 
 ####Usage
 
-To allow anyone to use this API, their details must be stored in a table called ```registered_users```.
+To allow anyone to use this API, their details must be stored in a table called ```user_details```.
 
 You'll need to enter that person's details and their unique id, or api_key. Open Python in ther terminal and run:
 
     import API.database_manager as db
     db.create_tables() #This will create tables if they don't exist already, meaning the app hasn't run yet.
-    db.insert_user_details('1412519715937603534460152', 'Amy', 'amy@gmail.com')
+    db.insert_user_details('12Jas97l59N603Kj3460a52', 'Amy', 'amy@gmail.com')
 
 You should see this echo:
 
@@ -111,11 +132,11 @@ Now, this user can add and retrieve data from the ```data_store``` table with he
 
 Accesing the database can be done through a query string to ```/post?```:
 
-    API_URL/post?api_key=1412519715937603534460152&date=2000-01-01&value=1323
+    API_URL/post?api_key=12Jas97l59N603Kj3460a52&date=2000-01-01&value=1323
 
 The query string above has these arguments:
 
-    api_key = 1412519715937603534460152
+    api_key = 12Jas97l59N603Kj3460a52
     date = 2000-01-01
     value = 1323
 
@@ -123,11 +144,11 @@ This user will receive a response that they have submitted a data row to the dat
 
 If the same user wants to retrieve that data:
 
-    API_URL/get?api_key=1412519715937603534460152&start_date=1900-01-01&end_date=2050-01-01
+    API_URL/get?api_key=12Jas97l59N603Kj3460a52&start_date=1900-01-01&end_date=2050-01-01
 
 This query string has these arguments:
 
-    api_key = 1412519715937603534460152
+    api_key = 12Jas97l59N603Kj3460a52
     start_date = 1900-01-01
     end_date = 2050-01-01
 
