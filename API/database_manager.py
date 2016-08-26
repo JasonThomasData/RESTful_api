@@ -4,7 +4,6 @@ import psycopg2
 
 #This is the code to connect to the PostgreSQL database on Heroku.
 
-'''
 import urlparse
 
 urlparse.uses_netloc.append("postgres")
@@ -22,7 +21,7 @@ conn = psycopg2.connect(
 #This is the code to connect to the database on your local dev env
 conn = psycopg2.connect("dbname=john user=john")
 '''
-'''
+
 def create_tables():
     '''
     Initialises the databases in whichever postgreSQL database we are connected to.
