@@ -28,7 +28,7 @@ def create_tables():
     '''
     with conn:
         with conn.cursor() as cur:
-            cur.execute("CREATE TABLE IF NOT EXISTS registered_users (api_key varchar PRIMARY KEY, user_name varchar, user_email varchar);")
+            cur.execute("CREATE TABLE IF NOT EXISTS user_details (api_key varchar PRIMARY KEY, user_name varchar, user_email varchar);")
             cur.execute("CREATE TABLE IF NOT EXISTS data_store (id serial PRIMARY KEY, data_date varchar, value varchar);")
 
 def drop_tables():
