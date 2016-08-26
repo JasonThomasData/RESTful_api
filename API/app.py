@@ -6,7 +6,7 @@ import os, datetime, watchdog
 app = Flask(__name__)
 
 app.config.update(dict(
-    DEBUG=False
+    DEBUG=True
 ))
 
 from API.views import get_data, post_data, pageNotFound
