@@ -14,6 +14,8 @@ The principles outlined in [this tutorial](http://www.tutorialspoint.com/restful
 
 This interface is self-explanatory: at no point in the process of formatting a query string should the user not receive feedback.
 
+Here is the app deployed on Heroku - https://restful-api-13321.herokuapp.com/
+
 ####Installation for development
 
 This was produced using Ubuntu 14.04 and python3.
@@ -38,7 +40,9 @@ In development, you can replace the above code with your own connection:
 
     conn = psycopg2.connect("dbname=john user=john")
 
-Of course for this to work, you will need to have created a postgreSQL database already. From the terminal:
+But the file in this repo has the settings defined for plugging into Heroku.
+
+You will need to have created a postgreSQL database already. From the terminal:
 
     psql
 
@@ -76,25 +80,28 @@ I've made my API to run on Heroku. To connect to the postgreSQL database in Hero
         port=url.port
     )
 
-The Heroku postgreSQL docs explain to use urlparse, but that is a python2 lib and python3 must use urllib.parse
+The Heroku postgreSQL docs explain to use urlparse, but that is a python2 lib and python3 must use urllib.parse.
+I've got this above code in my app already for deployment.
 
 I installed my app with the Heroku toolbelt. You should have a git repository with up-to-date master branch.
 
-Go to Heroku and type:
+Log into Heroku and type:
 
     heroku create APP_NAME
 
-The reason for using git is you can push directly to heroku using, like this:
+The reason for using git is you can push directly to heroku, when your git repo is up-to-date, like this:
 
     git push heroku master
+
+That will build the app from the requirements.txt
 
 Then, type:
 
     heroku addons:add heroku-postgresql
 
-That creates a postgreSQL database for you, and promotes it to the env variable DATABASE_URL
+That creates a postgreSQL database for you, and promotes it to the env variable DATABASE_URL.
 
-Here's some explainers I found useful while setting up 
+Here's some explainers I found useful while setting up: the [deploy section here](https://github.com/zachwill/flask_heroku), [this blogpost](http://blog.y3xz.com/blog/2012/08/16/flask-and-postgresql-on-heroku/) on setting up postgreSQL.
 
 ####Tests
 
@@ -102,7 +109,7 @@ Currently these unit tests work in a development environment.
 
 First, you'll need to create a database called ```test_flask_api```.
 
-This is exactly the same as creating your other database, type:
+This is exactly the same as creating your other database. On local machine type:
 
     createdb test_flask_api
 
@@ -116,17 +123,15 @@ To run the tests, use:
 
 To allow anyone to use this API, their details must be stored in a table called ```user_details```.
 
-You'll need to enter that person's details and their unique id, or api_key. Open Python in ther terminal and run:
+You'll need to enter that person's details and their unique id, or api_key. 
 
-    import API.database_manager as db
-    db.create_tables() #This will create tables if they don't exist already, meaning the app hasn't run yet.
-    db.insert_user_details('12Jas97l59N603Kj3460a52', 'Amy', 'amy@gmail.com')
+Now we want to add some user details to our app. Go to ```psql```, or ```heroku pg:psql``` in Heroku.
 
-You should see this echo:
+This is how we enter a user's details:
 
-    Entered user details
+    INSERT INTO user_details(api_key, user_name, user_email) VALUES ('12Jas97l59N603Kj3460a52', 'Amy', 'amy@gmail.com');
 
-That function is not used in the API and no request the user enters will allow access to it.
+If you were already running the app on Heroku, you'll need to restart that. I built my app from the git repo again, which restarted it, and it worked.
 
 Now, this user can add and retrieve data from the ```data_store``` table with her ```api_key```.
 
