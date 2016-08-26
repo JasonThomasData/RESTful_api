@@ -6,6 +6,7 @@ import psycopg2, os
 
 import urllib.parse
 
+'''
 urllib.parse.uses_netloc.append("postgres")
 url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
 
@@ -20,7 +21,7 @@ conn = psycopg2.connect(
 '''
 #This is the code to connect to the database on your local dev env
 conn = psycopg2.connect("dbname=john user=john")
-'''
+
 
 def create_tables():
     '''
@@ -37,7 +38,7 @@ def drop_tables():
     '''
     with conn:
         with conn.cursor() as cur:
-            cur.execute("DROP TABLE IF EXISTS registered_users;")
+            cur.execute("DROP TABLE IF EXISTS user_details;")
             cur.execute("DROP TABLE IF EXISTS data_store;")
 
 
@@ -72,7 +73,7 @@ def retrieve_user_details(api_key_from_request):
     '''
     with conn:
         with conn.cursor() as cur:
-            query = "SELECT * FROM registered_users WHERE (api_key = %s);"
+            query = "SELECT * FROM user_details WHERE (api_key = %s);"
             query_data = (str(api_key_from_request), )
             cur.execute(query, query_data)
             result = cur.fetchall()
