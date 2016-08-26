@@ -16,6 +16,8 @@ This interface is self-explanatory: at no point in the process of formatting a q
 
 Here is the app deployed on Heroku - https://restful-api-13321.herokuapp.com/
 
+This database already has one user entered with the api_key 12Jas97l59N603Kj3460a52.
+
 ####Installation for development
 
 This was produced using Ubuntu 14.04 and python3.
@@ -80,7 +82,8 @@ I've made my API to run on Heroku. To connect to the postgreSQL database in Hero
         port=url.port
     )
 
-The Heroku postgreSQL docs explain to use urlparse, but that is a python2 lib and python3 must use urllib.parse.
+The Heroku postgreSQL [docs explain](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python) to use urlparse, but that is a python2 lib and python3 must use urllib.parse.
+
 I've got this above code in my app already for deployment.
 
 I installed my app with the Heroku toolbelt. You should have a git repository with up-to-date master branch.
