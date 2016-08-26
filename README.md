@@ -8,7 +8,9 @@ This API has the following features:
 - Allows a third-party user with a valid api_key to submit data and retrieve data from the API.
 - Returns a json object with the data to the client.
 
-This is RESTful in the sense it does not need a client state: state is handled with a query string. This API is modular in design and is scalable. This uses a production-ready database, postgreSQL.
+This is RESTful in the sense it does not need a client state: state is handled with a query string. This API is modular in design and is scalable. This uses a production-ready database, postgreSQL. 
+
+The principles outlined in [this tutorial](http://www.tutorialspoint.com/restful/restful_statelessness.htm) are addressed.
 
 This interface is self-explanatory: at no point in the process of formatting a query string should the user not receive feedback.
 
