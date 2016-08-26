@@ -1,6 +1,6 @@
 #! usr/bin/env python3
 
-import psycopg2
+import psycopg2, os
 
 #This is the code to connect to the PostgreSQL database on Heroku.
 
