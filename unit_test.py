@@ -1,7 +1,7 @@
 #! usr/bin/env python3
 
 import os
-import API.controller
+import API.app
 import API.views
 import API.process_data
 import API.database_manager
@@ -70,11 +70,11 @@ class TestJsonDataFormatter(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
     def test(self):
-        with API.controller.app.test_request_context():
+        with API.app.app.test_request_context():
             access_details = access_details = str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
             data_from_db = [(1, '2011-05-31', 'Amsterdam')]
 
@@ -91,8 +91,8 @@ class TestCheckUserApiKeyPass(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -102,7 +102,7 @@ class TestCheckUserApiKeyPass(unittest.TestCase):
         API.database_manager.drop_tables()
 
     def test(self):
-        with API.controller.app.test_request_context():
+        with API.app.app.test_request_context():
             assert API.process_data.check_user_api_key('12Jas97l59N603Kj3460a52') == True
 
 
@@ -112,8 +112,8 @@ class TestCheckUserApiKeyFail(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -123,7 +123,7 @@ class TestCheckUserApiKeyFail(unittest.TestCase):
         API.database_manager.drop_tables()
 
     def test(self):
-        with API.controller.app.test_request_context():
+        with API.app.app.test_request_context():
             assert API.process_data.check_user_api_key('12Jas97l59N603Kfailj3460a52') == False
 
 
@@ -138,8 +138,8 @@ class TestFirstRequest(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
     def test(self):
         rv = self.app.get('/')
@@ -152,8 +152,8 @@ class TestRequestWrongURL(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
     def test(self):
         rv = self.app.get('/g3t?')
@@ -166,8 +166,8 @@ class TestRequestToGet(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -187,8 +187,8 @@ class TestRequestToPost(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -208,8 +208,8 @@ class TestApiKeyWorksPass(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -229,8 +229,8 @@ class TestApiKeyWorksFail(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -250,8 +250,8 @@ class TestPostDateMonthIncorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -271,8 +271,8 @@ class TestPostDateDayIncorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -292,8 +292,8 @@ class TestPostDateYearIncorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -313,8 +313,8 @@ class TestPostDateIncorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -335,8 +335,8 @@ class TestPostDateCorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -356,8 +356,8 @@ class TestPostValueIncorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -377,8 +377,8 @@ class TestPostValueCorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -398,8 +398,8 @@ class TestGetStartDateIncorrectBlank(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -419,8 +419,8 @@ class TestGetStartDateIncorrectFormatting(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -440,8 +440,8 @@ class TestGetStartDateIncorrectString(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -462,8 +462,8 @@ class TestGetStartDateCorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()
@@ -484,8 +484,8 @@ class TestGetEndDateCorrect(unittest.TestCase):
     '''
 
     def setUp(self):
-        API.controller.app.config['TESTING'] = True
-        self.app = API.controller.app.test_client()
+        API.app.app.config['TESTING'] = True
+        self.app = API.app.app.test_client()
 
         API.database_manager.conn = psycopg2.connect(db_credentials)
         API.database_manager.create_tables()

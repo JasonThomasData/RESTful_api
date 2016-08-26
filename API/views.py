@@ -1,8 +1,8 @@
 #! usr/bin/env python3
 
 from flask import request
-from API.controller import app
-import API.controller
+from API.app import app
+import API.app
 
 @app.route('/get', methods=['GET'])
 def get_data():
@@ -10,7 +10,7 @@ def get_data():
     Process a request to /get.
     This is what a registered user will use to retrive the data
     '''
-    return API.controller.process_get_request()
+    return API.app.process_get_request()
 
 @app.route('/post', methods=['GET', 'POST'])
 def post_data():
@@ -18,7 +18,7 @@ def post_data():
     Process a request to /post.
     This is how we add datato the database for users to access.
     '''
-    return API.controller.process_post_request()
+    return API.app.process_post_request()
 
 @app.errorhandler(404)
 def pageNotFound(error):
