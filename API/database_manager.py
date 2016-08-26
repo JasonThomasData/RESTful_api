@@ -86,7 +86,7 @@ def insert_user_details(api_key, user_name, user_email):
     '''
     with conn:
         with conn.cursor() as cur:
-            query = "INSERT INTO registered_users (api_key, user_name, user_email) VALUES (%s, %s, %s);"
+            query = "INSERT INTO user_details (api_key, user_name, user_email) VALUES (%s, %s, %s);"
             query_data = (api_key, user_name, user_email)
             cur.execute(query, query_data)
             return 'Entered user details'
